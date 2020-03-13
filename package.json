@@ -1,0 +1,21 @@
+{
+  "name": "wellkeeps",
+  "version": "1.0.0",
+  "description": "crawling sold out infomation from wellkeeps site ",
+  "main": "index.js",
+  "scripts": {
+    "test": "wellkeeps"
+  },
+  "keywords": [
+    "mask"
+  ],
+  "author": "prozanne",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "node-schedule": "^1.3.2",
+    "nodemailer": "^6.4.5",
+    "nodemailer-smtp-pool": "^2.8.3",
+    "request": "^2.88.2"
+  }
+}
