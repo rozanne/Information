@@ -6,7 +6,7 @@ const smtpPool = require('nodemailer-smtp-pool');
 
 const url = 'http://www.welkeepsmall.com';
 const MAX_SOLDOUT = 12;
-const INTERVAL = 30000;
+const INTERVAL = 60000;
 
 const ACCOUNT = 'rosieprintonly@gmail.com';
 const PASSWORD = 'rlagywls90';
@@ -21,12 +21,16 @@ let scheduler = setInterval(() => {
         let results = html.match(/SOLD OUT/g);
         if (isAvailableToBuy(results)) {
             console.log('Success, You can buy');
-            sendMeMail();
+            sendMeMail(RECEIVER);
         } else {
             console.log('You can`t buy');
         }
     });
 }, INTERVAL);
+
+let checker = schedule.scheduleJob('00 * * * *', () => {
+    sendMeMail(ACCOUNT);
+});
 
 function isAvailableToBuy(results) {
     if (results !== null && results.length < MAX_SOLDOUT) {
@@ -35,7 +39,7 @@ function isAvailableToBuy(results) {
     return false;
 }
 
-function sendMeMail() {
+function sendMeMail(receiver) {
     var smtpTransport = nodemailer.createTransport(
         smtpPool({
             service: 'Gmail',
@@ -55,7 +59,7 @@ function sendMeMail() {
 
     var mailOpt = {
         from: ACCOUNT,
-        to: RECEIVER,
+        to: receiver,
         subject: 'Wellkeeps 마스크 입고 알림',
         html:
             '<a href="http://www.welkeepsmall.com/shop/shopbrandCA.html?type=X&xcode=023">http://www.welkeepsmall.com/shop/shopbrandCA.html?type=X&xcode=023</a>'
